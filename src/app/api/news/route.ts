@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     const data = await res.json();
 
     return Response.json(data);
-  } catch (e: any) {
-    return new Response(`Error: ${e?.message || e}`, { status: 500 });
+  } catch (e: unknown) {
+    return new Response(`Error: ${e instanceof Error ? e.message : String(e)}`, { status: 500 });
   }
 }
