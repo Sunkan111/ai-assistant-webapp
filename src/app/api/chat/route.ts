@@ -1,13 +1,16 @@
+import type { Content } from "@google/generative-ai";
 // src/app/api/chat/route.ts
 export const runtime = "nodejs";
 
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, type Content } from "@google/generative-ai";
+
 
 function toGeminiRole(role: string) {
   return role === "assistant" ? "model" : "user";
 }
 
 export async function POST(request: Request) {
+  // Dynamisk import för Vercel-kompatibilitet
+  const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = await import("@google/generative-ai");
   try {
     const { messages, model = "gemini-1.5-pro", temperature = 0.7 } = await request.json();
 
