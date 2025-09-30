@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     });
   } catch (e: any) {
     console.error(e); // Logga felet för felsökning
-    return new Response(`Error: ${e?.message || e}`, { status: 500 });
+    return new Response(`Error: ${e instanceof Error ? e.message : String(e)}`, { status: 500 });
   }
 }
 
