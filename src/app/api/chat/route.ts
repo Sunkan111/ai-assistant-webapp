@@ -49,8 +49,8 @@ export async function POST(request: Request) {
           }
           controller.enqueue(encoder.encode("data: [DONE]\n\n"));
           controller.close();
-        } catch (e) {
-          controller.error(e);
+        } catch (e: unknown) {
+          controller.error(e instanceof Error ? e : String(e));
         }
       },
     });
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
         "X-Accel-Buffering": "no",
       },
     });
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error(e); // Logga felet för felsökning
     return new Response(`Error: ${e instanceof Error ? e.message : String(e)}`, { status: 500 });
   }
